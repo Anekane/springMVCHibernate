@@ -1,0 +1,70 @@
+ARCHIVOS MODIFICADOS:
+
+project/prom.xml
+-------------------------------------------------
+AÑADIR LAS SIGUIENTES LÍNEAS:
+	<!-- SQLITE -->
+	<!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
+	<dependency>
+	<groupId>org.xerial</groupId>
+	<artifactId>sqlite-jdbc</artifactId>
+	<version>3.28.0</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.zsoltfabok/sqlite-dialect -->
+	<dependency>
+	<groupId>com.zsoltfabok</groupId>
+	<artifactId>sqlite-dialect</artifactId>
+	<version>1.0</version>
+	</dependency>
+-------------------------------------------------
+
+project/src/main/resources/META-INF/database.properties
+-------------------------------------------------
+AÑADIR LAS SIGUIENTES LÍNEAS:
+	hibernate.dialect=org.hibernate.dialect.SQLiteDialect
+
+	jdbc.driverCassName=org.sqLite.JDBC
+	jdbc.url=jdbc:sqlite:/media/jachada/PROGRAMACION/cdaw1/rufo/Ejercicios/Tercera/Retocando Project/springMVCHibernate/paises.db
+	jdbc.username=
+	jdbc.password=
+-------------------------------------------------
+
+project/src/main/java/com/journaldev/spring/dao/PersonDAOImple.java
+-------------------------------------------------
+MODIFICAR addPerson PARA QUE QUEDE DE LA SIGUIENTE MANERA
+	@Override
+		public void addPerson(Person p) {
+			Session session = this.sessionFactory.getCurrentSession();
+			session.persist(p);
+			logger.info("Person saved successfully, Person Details=" + p);
+		}
+-------------------------------------------------
+
+project/src/main/java/com/journaldev/spring/model/Person.java
+-------------------------------------------------
+MODIFCAR @Table(name="PERSON") POR @Table(name="person")
+-------------------------------------------------
+
+---------------------------------------------------------------------------------------------------
+
+YA ESTÁ TODO CONFIGURADO YA SOLO DEBEMOS INICIARLO Y AÑADIR DATOS DESDE EL NAVEGADOR. 
+
+ANTES DE AÑADIR DATOS:
+jachada@jachada:/media/jachada/PROGRAMACION/cdaw1/rufo/Ejercicios/Tercera/Retocando Project/springMVCHibernate/project$ sqlite3 ../paises.db 
+	SQLite version 3.22.0 2018-01-22 18:45:57
+	Enter ".help" for usage hints.
+	sqlite> create table person (id integer primary key,name text not null, country text not null);
+	sqlite> select * from person;
+	sqlite> 
+
+
+
+DESPUÉS DE AÑADIR DATOS:
+jachada@jachada:/media/jachada/PROGRAMACION/cdaw1/rufo/Ejercicios/Tercera/Retocando Project/springMVCHibernate/project$ sqlite3 ../paises.db 
+	SQLite version 3.22.0 2018-01-22 18:45:57
+	Enter ".help" for usage hints.
+	sqlite> select * from person;
+		1|carmen|japon
+		2|javi|españa
+	sqlite> 
+
