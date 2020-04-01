@@ -26,19 +26,8 @@ public class PersonDAOImpl implements PersonDAO {
 	@Override
 	public void addPerson(Person p) {
 		Session session = this.sessionFactory.getCurrentSession();
-		
-		String hql = "SELECT p.country FROM Person p";
-		Query query = session.createQuery(hql);
-		List <String> results = query.list();
-		
-		for (String item : results) {
-			if (item.equals(p.getCountry())) {
-				logger.info("Error, ya existe una persona del país indicado");
-			} else {
-				session.persist(p);
-				logger.info("Person saved successfully, Person Details=" + p);
-			}
-		}
+		session.persist(p);
+		logger.info("Person saved successfully, Person Details=" + p);
 	}
 
 	@Override
